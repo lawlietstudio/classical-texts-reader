@@ -37,15 +37,29 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
   // stop, so `onStopped` fires right after we call Speech.pause(). This ref lets `onStopped`
   // tell that apart from a genuine stop and ignore the spurious one.
   const pausedRef = useRef(false);
+  // Tracks the passage id and completion callback of the utterance currently in flight, so the
+  // resume watchdog below can tell whether a passage is still "owned" by the utterance it started
+  // watching, or has already moved on via a normal onDone.
+  const activePassageIdRef = useRef<string | null>(null);
+  const pendingOnEndRef = useRef<(() => void) | null>(null);
+  const watchdogRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { voices, voiceId, checked: voiceChecked, selectVoice } = useSpeechVoice(lang);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
+
+  const clearWatchdog = useCallback(() => {
+    if (watchdogRef.current != null) {
+      clearInterval(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
       stopRequestedRef.current = true;
+      clearWatchdog();
       Speech.stop();
     };
-  }, [chapter.id]);
+  }, [chapter.id, clearWatchdog]);
 
   const vernacularFor = useCallback(
     (passage: Passage) =>
@@ -60,6 +74,9 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
 
   const speakOne = useCallback(
     (passage: Passage, onEnd?: () => void) => {
+      clearWatchdog();
+      activePassageIdRef.current = passage.id;
+      pendingOnEndRef.current = onEnd ?? null;
       Speech.speak(textFor(passage), {
         language: lang,
         voice: voiceId,
@@ -70,6 +87,9 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
           setIsPaused(false);
         },
         onDone: () => {
+          clearWatchdog();
+          activePassageIdRef.current = null;
+          pendingOnEndRef.current = null;
           setPlayingPassageId(null);
           pausedRef.current = false;
           setIsPaused(false);
@@ -77,17 +97,23 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
         },
         onStopped: () => {
           if (pausedRef.current) return;
+          clearWatchdog();
+          activePassageIdRef.current = null;
+          pendingOnEndRef.current = null;
           setPlayingPassageId(null);
           setIsPaused(false);
         },
         onError: () => {
+          clearWatchdog();
+          activePassageIdRef.current = null;
+          pendingOnEndRef.current = null;
           setPlayingPassageId(null);
           pausedRef.current = false;
           setIsPaused(false);
         },
       });
     },
-    [lang, rate, textFor, voiceId]
+    [clearWatchdog, lang, rate, textFor, voiceId]
   );
 
   const playChapterFrom = useCallback(
@@ -112,6 +138,9 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
 
   const handleStop = () => {
     stopRequestedRef.current = true;
+    clearWatchdog();
+    activePassageIdRef.current = null;
+    pendingOnEndRef.current = null;
     Speech.stop();
     setIsPlayingChapter(false);
     setPlayingPassageId(null);
@@ -121,6 +150,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
 
   const handlePlaySingle = (passage: Passage) => {
     stopRequestedRef.current = true;
+    clearWatchdog();
     Speech.stop();
     stopRequestedRef.current = false;
     pausedRef.current = false;
@@ -133,12 +163,36 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
       pausedRef.current = false;
       setIsPaused(false);
       Speech.resume();
+      // Some browsers (observed on Chromium) never fire the utterance's completion
+      // event after a pause()/resume() cycle, even though playback actually finishes —
+      // silently stalling chapter auto-advance. Poll as a fallback and manually advance
+      // if the engine goes idle while this passage is still marked active.
+      clearWatchdog();
+      const watchedPassageId = activePassageIdRef.current;
+      if (watchedPassageId != null) {
+        watchdogRef.current = setInterval(() => {
+          Speech.isSpeakingAsync().then((speaking) => {
+            if (speaking || activePassageIdRef.current !== watchedPassageId) {
+              if (activePassageIdRef.current !== watchedPassageId) clearWatchdog();
+              return;
+            }
+            clearWatchdog();
+            const onEnd = pendingOnEndRef.current;
+            activePassageIdRef.current = null;
+            pendingOnEndRef.current = null;
+            pausedRef.current = false;
+            setPlayingPassageId(null);
+            setIsPaused(false);
+            onEnd?.();
+          });
+        }, 300);
+      }
     } else {
       pausedRef.current = true;
       setIsPaused(true);
       Speech.pause();
     }
-  }, [isPaused]);
+  }, [clearWatchdog, isPaused]);
 
   const adjustRate = (delta: number) => {
     setRate((r) => Math.min(1.5, Math.max(0.5, +(r + delta).toFixed(2))));
