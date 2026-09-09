@@ -9,6 +9,7 @@ import { sunpolutaoniLiezhuan } from './sanguozhi/07-sunpolutaoni-liezhuan';
 import { wuzhuzhuan } from './sanguozhi/08-wuzhuzhuan';
 import { zhouyuluxulyumengLiezhuan } from './sanguozhi/09-zhouyuluxulyumeng-liezhuan';
 import { luxunLiezhuan } from './sanguozhi/10-luxun-liezhuan';
+import { dongeryuanliuLiezhuan } from './sanguozhi/11-dongeryuanliu-liezhuan';
 
 export const sanguozhi: Book = {
   id: 'sanguozhi',
@@ -27,5 +28,6 @@ export const sanguozhi: Book = {
     wuzhuzhuan,
     zhouyuluxulyumengLiezhuan,
     luxunLiezhuan,
+    dongeryuanliuLiezhuan,
   ],
 };
