@@ -11,6 +11,8 @@ import { sanguoyanyi } from './sanguoyanyi';
 import { shiji } from './shiji';
 import { lvshichunqiu } from './lvshichunqiu';
 import { sunzibingfa } from './sunzibingfa';
+import { guiguzi } from './guiguzi';
+import { hanfeizi } from './hanfeizi';
 
 export const books: Book[] = [
   lunyu,
@@ -25,6 +27,8 @@ export const books: Book[] = [
   shiji,
   lvshichunqiu,
   sunzibingfa,
+  guiguzi,
+  hanfeizi,
 ];
 
 export function getBook(id: string): Book | undefined {
