@@ -155,14 +155,19 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
     setIsPaused(false);
   };
 
-  const handlePlaySingle = (passage: Passage) => {
+  const handlePlayFrom = (passage: Passage) => {
+    const index = chapter.passages.findIndex((p) => p.id === passage.id);
+    if (index === -1) return;
     stopRequestedRef.current = true;
     clearWatchdog();
+    activePassageIdRef.current = null;
+    pendingOnEndRef.current = null;
     Speech.stop();
     stopRequestedRef.current = false;
     pausedRef.current = false;
     setIsPaused(false);
-    speakOne(passage);
+    setIsPlayingChapter(true);
+    playChapterFrom(index);
   };
 
   const handlePauseResume = useCallback(() => {
@@ -289,7 +294,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
                 )}
                 <Pressable
                   onPress={() =>
-                    active && supportsPauseResume ? handlePauseResume() : handlePlaySingle(passage)
+                    active && supportsPauseResume ? handlePauseResume() : handlePlayFrom(passage)
                   }
                   hitSlop={10}
                 >
