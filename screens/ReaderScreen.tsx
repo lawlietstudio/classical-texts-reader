@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { Chapter, Passage } from '../data/types';
-import { useReaderPrefs } from '../hooks/useReaderPrefs';
+import { FONT_SIZE_VALUES, useReaderPrefs } from '../hooks/useReaderPrefs';
 import { SpeechLang } from '../hooks/useSpeechLang';
 import { useSpeechVoice } from '../hooks/useSpeechVoice';
 import { ThemeColors } from '../theme/colors';
@@ -24,13 +24,20 @@ type Props = {
 };
 
 export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, onBack, colors }: Props) {
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const {
+    textSource,
+    toggleTextSource,
+    showVernacular,
+    setShowVernacular,
+    fontSize,
+    rate,
+    setRate,
+  } = useReaderPrefs();
+  const styles = useMemo(() => createStyles(colors, FONT_SIZE_VALUES[fontSize]), [colors, fontSize]);
   const [playingPassageId, setPlayingPassageId] = useState<string | null>(null);
   const [isPlayingChapter, setIsPlayingChapter] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const supportsPauseResume = Platform.OS !== 'android';
-  const { textSource, toggleTextSource, showVernacular, setShowVernacular } = useReaderPrefs();
-  const [rate, setRate] = useState(0.85);
   const stopRequestedRef = useRef(false);
   // Mirrors `isPaused` synchronously. On web, expo-speech maps the browser's
   // SpeechSynthesisUtterance `onpause` event to the same `onStopped` callback used for a real
@@ -195,7 +202,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
   }, [clearWatchdog, isPaused]);
 
   const adjustRate = (delta: number) => {
-    setRate((r) => Math.min(1.5, Math.max(0.5, +(r + delta).toFixed(2))));
+    setRate((r) => r + delta);
   };
 
   return (
@@ -334,7 +341,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
   );
 }
 
-const createStyles = (c: ThemeColors) =>
+const createStyles = (c: ThemeColors, passageFontSize: number) =>
   StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background, paddingTop: 56 },
     topBar: {
@@ -402,8 +409,18 @@ const createStyles = (c: ThemeColors) =>
     },
     passageTitle: { fontSize: 13, fontWeight: '700', color: c.accent },
     playIcon: { fontSize: 16 },
-    originalText: { fontSize: 19, lineHeight: 30, color: c.textPrimary, fontWeight: '500' },
-    vernacularText: { fontSize: 14, lineHeight: 22, color: c.textSecondary, marginTop: 10 },
+    originalText: {
+      fontSize: passageFontSize,
+      lineHeight: Math.round(passageFontSize * 1.6),
+      color: c.textPrimary,
+      fontWeight: '500',
+    },
+    vernacularText: {
+      fontSize: passageFontSize,
+      lineHeight: Math.round(passageFontSize * 1.6),
+      color: c.textSecondary,
+      marginTop: 10,
+    },
     modalOverlay: {
       flex: 1,
       backgroundColor: c.modalOverlay,

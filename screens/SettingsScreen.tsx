@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SchemeMode, ThemeScheme } from '../hooks/useTheme';
+import { FONT_SIZE_OPTIONS, FONT_SIZE_VALUES, useReaderPrefs } from '../hooks/useReaderPrefs';
 import { Palette, PaletteId, ThemeColors } from '../theme/colors';
 
 type Props = {
@@ -31,6 +32,7 @@ export default function SettingsScreen({
   palettes,
 }: Props) {
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const { fontSize, setFontSize } = useReaderPrefs();
 
   return (
     <View style={styles.container}>
@@ -87,6 +89,32 @@ export default function SettingsScreen({
             );
           })}
         </View>
+
+        <Text style={[styles.sectionTitle, styles.sectionTitleSpaced]}>字體大小</Text>
+        <View style={styles.segmentRow}>
+          {FONT_SIZE_OPTIONS.map((opt) => {
+            const active = fontSize === opt.key;
+            return (
+              <Pressable
+                key={opt.key}
+                style={[styles.segmentBtn, active && styles.segmentBtnActive]}
+                onPress={() => setFontSize(opt.key)}
+              >
+                <Text style={[styles.segmentText, active && styles.segmentTextActive]}>
+                  {opt.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Text
+          style={[
+            styles.fontPreview,
+            { fontSize: FONT_SIZE_VALUES[fontSize], lineHeight: Math.round(FONT_SIZE_VALUES[fontSize] * 1.6) },
+          ]}
+        >
+          原文同白話都會用呢個大小顯示。
+        </Text>
       </ScrollView>
     </View>
   );
@@ -143,4 +171,5 @@ const createStyles = (c: ThemeColors) =>
     },
     paletteName: { fontSize: 15, fontWeight: '600', color: c.textPrimary, flex: 1 },
     paletteCheck: { fontSize: 16, color: c.accentStrong, fontWeight: '700' },
+    fontPreview: { color: c.textPrimary, marginTop: 12 },
   });
