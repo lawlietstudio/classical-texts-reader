@@ -348,7 +348,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
 
 const createStyles = (c: ThemeColors, passageFontSize: number) =>
   StyleSheet.create({
-    container: { flex: 1, backgroundColor: c.background, paddingTop: 56 },
+    container: { flex: 1, backgroundColor: c.background, paddingTop: Platform.OS === 'web' ? 20 : 56 },
     topBar: {
       flexDirection: 'row',
       alignItems: 'center',

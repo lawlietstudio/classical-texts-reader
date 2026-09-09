@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SchemeMode, ThemeScheme } from '../hooks/useTheme';
 import { FONT_SIZE_OPTIONS, FONT_SIZE_VALUES, useReaderPrefs } from '../hooks/useReaderPrefs';
 import { Palette, PaletteId, ThemeColors } from '../theme/colors';
@@ -122,7 +122,7 @@ export default function SettingsScreen({
 
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
-    container: { flex: 1, backgroundColor: c.background, paddingTop: 64 },
+    container: { flex: 1, backgroundColor: c.background, paddingTop: Platform.OS === 'web' ? 24 : 64 },
     topBar: {
       flexDirection: 'row',
       alignItems: 'center',

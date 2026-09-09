@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Book } from '../data/types';
 import { ThemeColors } from '../theme/colors';
 
@@ -38,7 +38,12 @@ export default function ChapterListScreen({ book, onBack, onOpenChapter, colors 
 
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
-    container: { flex: 1, backgroundColor: c.background, paddingTop: 64, paddingHorizontal: 20 },
+    container: {
+      flex: 1,
+      backgroundColor: c.background,
+      paddingTop: Platform.OS === 'web' ? 24 : 64,
+      paddingHorizontal: 20,
+    },
     back: { fontSize: 16, color: c.textSecondary, marginBottom: 12 },
     header: { fontSize: 26, fontWeight: '700', color: c.textPrimary },
     subheader: { fontSize: 13, color: c.textSecondary, marginTop: 4, marginBottom: 16 },
