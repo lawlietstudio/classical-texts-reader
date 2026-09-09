@@ -7,6 +7,18 @@ import { SpeechLang } from '../hooks/useSpeechLang';
 import { useSpeechVoice } from '../hooks/useSpeechVoice';
 import { ThemeColors } from '../theme/colors';
 
+// react-native-web's `Platform.OS` is always `'web'`, even when the page is running inside
+// Android Chrome — it doesn't distinguish the underlying mobile OS the way the native
+// `Platform.OS` does. But Android Chrome's `speechSynthesis.pause()`/`resume()` has the same
+// problem as Android's native TextToSpeech: `resume()` reliably fails to actually continue
+// speaking (this is a long-standing Chromium-on-Android bug, not something this app can fix),
+// so pause/resume needs to be disabled there too, detected via user-agent sniffing since
+// `Platform.OS` alone can't tell us.
+const isAndroidWeb =
+  Platform.OS === 'web' &&
+  typeof navigator !== 'undefined' &&
+  /android/i.test(navigator.userAgent ?? '');
+
 function shortVoiceLabel(voice: Speech.Voice) {
   const name = voice.name || voice.identifier;
   const dashIndex = name.indexOf(' - ');
@@ -37,7 +49,7 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
   const [playingPassageId, setPlayingPassageId] = useState<string | null>(null);
   const [isPlayingChapter, setIsPlayingChapter] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const supportsPauseResume = Platform.OS !== 'android';
+  const supportsPauseResume = Platform.OS !== 'android' && !isAndroidWeb;
   const stopRequestedRef = useRef(false);
   // Mirrors `isPaused` synchronously. On web, expo-speech maps the browser's
   // SpeechSynthesisUtterance `onpause` event to the same `onStopped` callback used for a real
