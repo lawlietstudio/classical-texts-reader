@@ -14,6 +14,9 @@ import { benwei } from './lvshichunqiu/12-benwei';
 import { yibao } from './lvshichunqiu/13-yibao';
 import { shijie } from './lvshichunqiu/14-shijie';
 import { chenglian } from './lvshichunqiu/15-chenglian';
+import { chajin } from './lvshichunqiu/16-chajin';
+import { quyou2 } from './lvshichunqiu/17-quyou2';
+import { jingyu } from './lvshichunqiu/18-jingyu';
 
 export const lvshichunqiu: Book = {
   id: 'lvshichunqiu',
@@ -37,5 +40,8 @@ export const lvshichunqiu: Book = {
     yibao,
     shijie,
     chenglian,
+    chajin,
+    quyou2,
+    jingyu,
   ],
 };
