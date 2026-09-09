@@ -13,6 +13,11 @@ import { lvshichunqiu } from './lvshichunqiu';
 import { sunzibingfa } from './sunzibingfa';
 import { guiguzi } from './guiguzi';
 import { hanfeizi } from './hanfeizi';
+import { shishuo } from './shishuo';
+import { jianzhukeshu } from './jianzhukeshu';
+import { chushibiao } from './chushibiao';
+import { longzhongdui } from './longzhongdui';
+import { chenqingbiao } from './chenqingbiao';
 
 export const books: Book[] = [
   lunyu,
@@ -29,6 +34,11 @@ export const books: Book[] = [
   sunzibingfa,
   guiguzi,
   hanfeizi,
+  shishuo,
+  jianzhukeshu,
+  chushibiao,
+  longzhongdui,
+  chenqingbiao,
 ];
 
 export function getBook(id: string): Book | undefined {
