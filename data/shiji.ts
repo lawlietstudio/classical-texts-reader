@@ -11,6 +11,20 @@ import { guanyanLiezhuan } from './shiji/10-guanyan-liezhuan';
 import { wuzixuLiezhuan } from './shiji/11-wuzixu-liezhuan';
 import { shangjunLiezhuan } from './shiji/12-shangjun-liezhuan';
 import { suqinLiezhuan } from './shiji/13-suqin-liezhuan';
+import { zhangyiLiezhuan } from './shiji/14-zhangyi-liezhuan';
+import { mengchangjunLiezhuan } from './shiji/15-mengchangjun-liezhuan';
+import { weigongziLiezhuan } from './shiji/16-weigongzi-liezhuan';
+import { lianpoLinxiangruLiezhuan } from './shiji/17-lianpo-linxiangru-liezhuan';
+import { quyuanJiashengLiezhuan } from './shiji/18-quyuan-jiasheng-liezhuan';
+import { lvbuweiLiezhuan } from './shiji/19-lvbuwei-liezhuan';
+import { cikeLiezhuan } from './shiji/20-cike-liezhuan';
+import { lisiLiezhuan } from './shiji/21-lisi-liezhuan';
+import { huaiyinhouLiezhuan } from './shiji/22-huaiyinhou-liezhuan';
+import { lijiangjunLiezhuan } from './shiji/23-lijiangjun-liezhuan';
+import { youxiaLiezhuan } from './shiji/24-youxia-liezhuan';
+import { huajiLiezhuan } from './shiji/25-huaji-liezhuan';
+import { huozhiLiezhuan } from './shiji/26-huozhi-liezhuan';
+import { taishigongZixu } from './shiji/27-taishigong-zixu';
 import { chensheShijia } from './shiji/02-chenshe-shijia';
 
 export const shiji: Book = {
@@ -32,6 +46,20 @@ export const shiji: Book = {
     wuzixuLiezhuan,
     shangjunLiezhuan,
     suqinLiezhuan,
+    zhangyiLiezhuan,
+    mengchangjunLiezhuan,
+    weigongziLiezhuan,
+    lianpoLinxiangruLiezhuan,
+    quyuanJiashengLiezhuan,
+    lvbuweiLiezhuan,
+    cikeLiezhuan,
+    lisiLiezhuan,
+    huaiyinhouLiezhuan,
+    lijiangjunLiezhuan,
+    youxiaLiezhuan,
+    huajiLiezhuan,
+    huozhiLiezhuan,
+    taishigongZixu,
     chensheShijia,
   ],
 };
