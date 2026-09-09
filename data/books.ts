@@ -18,6 +18,7 @@ import { jianzhukeshu } from './jianzhukeshu';
 import { chushibiao } from './chushibiao';
 import { longzhongdui } from './longzhongdui';
 import { chenqingbiao } from './chenqingbiao';
+import { sanguozhi } from './sanguozhi';
 
 export const books: Book[] = [
   lunyu,
@@ -39,6 +40,7 @@ export const books: Book[] = [
   chushibiao,
   longzhongdui,
   chenqingbiao,
+  sanguozhi,
 ];
 
 export function getBook(id: string): Book | undefined {
