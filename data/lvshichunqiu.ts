@@ -8,6 +8,12 @@ import { jinshu } from './lvshichunqiu/06-jinshu';
 import { quanxue } from './lvshichunqiu/07-quanxue';
 import { zunshi } from './lvshichunqiu/08-zunshi';
 import { gule } from './lvshichunqiu/09-gule';
+import { yingtong } from './lvshichunqiu/10-yingtong';
+import { quyou } from './lvshichunqiu/11-quyou';
+import { benwei } from './lvshichunqiu/12-benwei';
+import { yibao } from './lvshichunqiu/13-yibao';
+import { shijie } from './lvshichunqiu/14-shijie';
+import { chenglian } from './lvshichunqiu/15-chenglian';
 
 export const lvshichunqiu: Book = {
   id: 'lvshichunqiu',
@@ -15,5 +21,21 @@ export const lvshichunqiu: Book = {
   author: '呂不韋',
   description:
     '戰國末年秦相呂不韋召集門客編纂嘅雜家鉅著,兼採儒、道、墨、法、陰陽各家學說,分十二紀、八覽、六論。呢度精選當中最經典嘅篇章,逐篇加入。',
-  chapters: [bensheng, zhongji, guigong, qusi, qingyu, jinshu, quanxue, zunshi, gule],
+  chapters: [
+    bensheng,
+    zhongji,
+    guigong,
+    qusi,
+    qingyu,
+    jinshu,
+    quanxue,
+    zunshi,
+    gule,
+    yingtong,
+    quyou,
+    benwei,
+    yibao,
+    shijie,
+    chenglian,
+  ],
 };
