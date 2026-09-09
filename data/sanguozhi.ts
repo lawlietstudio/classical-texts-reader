@@ -6,6 +6,7 @@ import { guanzhangmahuangzhaoLiezhuan } from './sanguozhi/04-guanzhangmahuangzha
 import { pangtongfazhengLiezhuan } from './sanguozhi/05-pangtongfazheng-liezhuan';
 import { jiangwanfeiyijiangweiLiezhuan } from './sanguozhi/06-jiangwanfeiyijiangwei-liezhuan';
 import { sunpolutaoniLiezhuan } from './sanguozhi/07-sunpolutaoni-liezhuan';
+import { wuzhuzhuan } from './sanguozhi/08-wuzhuzhuan';
 
 export const sanguozhi: Book = {
   id: 'sanguozhi',
@@ -21,5 +22,6 @@ export const sanguozhi: Book = {
     pangtongfazhengLiezhuan,
     jiangwanfeiyijiangweiLiezhuan,
     sunpolutaoniLiezhuan,
+    wuzhuzhuan,
   ],
 };
