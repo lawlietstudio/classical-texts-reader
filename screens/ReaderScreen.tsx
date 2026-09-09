@@ -293,12 +293,23 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
                   <View />
                 )}
                 <Pressable
-                  onPress={() =>
-                    active && supportsPauseResume ? handlePauseResume() : handlePlayFrom(passage)
-                  }
+                  onPress={() => {
+                    if (!active) {
+                      handlePlayFrom(passage);
+                    } else if (supportsPauseResume) {
+                      handlePauseResume();
+                    } else {
+                      // No pause/resume on this platform (Android's TTS has no such
+                      // concept) — tapping the "active" icon here must stop playback,
+                      // not restart the passage from the top.
+                      handleStop();
+                    }
+                  }}
                   hitSlop={10}
                 >
-                  <Text style={styles.playIcon}>{active && !isPaused ? '⏸' : '▶'}</Text>
+                  <Text style={styles.playIcon}>
+                    {!active ? '▶' : supportsPauseResume ? (isPaused ? '▶' : '⏸') : '■'}
+                  </Text>
                 </Pressable>
               </View>
               <Text style={styles.originalText}>{passage.original}</Text>
