@@ -1,5 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import {
+  LayoutChangeEvent,
+  Modal,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+} from 'react-native';
 import * as Speech from 'expo-speech';
 import { Chapter, Passage } from '../data/types';
 import { FONT_SIZE_VALUES, useReaderPrefs } from '../hooks/useReaderPrefs';
@@ -52,6 +64,58 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
   const watchdogRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { voices, voiceId, checked: voiceChecked, selectVoice } = useSpeechVoice(lang);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
+
+  // Snap-scrolling: after the user stops scrolling, glide to the top of whichever passage
+  // card is nearest, so scrolling advances one passage at a time instead of landing mid-card.
+  const scrollRef = useRef<ScrollView>(null);
+  const passageOffsetsRef = useRef<number[]>([]);
+  const lastScrollYRef = useRef(0);
+  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    passageOffsetsRef.current = [];
+  }, [chapter.id]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
+    };
+  }, []);
+
+  const handlePassageLayout = useCallback((index: number, e: LayoutChangeEvent) => {
+    passageOffsetsRef.current[index] = e.nativeEvent.layout.y;
+  }, []);
+
+  const snapToNearestPassage = useCallback((y: number) => {
+    const offsets = passageOffsetsRef.current;
+    if (!offsets.length) return;
+    let nearest = offsets[0];
+    let minDist = Math.abs(y - nearest);
+    for (let i = 1; i < offsets.length; i++) {
+      const offset = offsets[i];
+      if (offset == null) continue;
+      const dist = Math.abs(y - offset);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = offset;
+      }
+    }
+    if (Math.abs(nearest - y) > 1) {
+      scrollRef.current?.scrollTo({ y: nearest, animated: true });
+    }
+  }, []);
+
+  const handleScroll = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      lastScrollYRef.current = e.nativeEvent.contentOffset.y;
+      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
+      scrollEndTimerRef.current = setTimeout(() => {
+        scrollEndTimerRef.current = null;
+        snapToNearestPassage(lastScrollYRef.current);
+      }, 120);
+    },
+    [snapToNearestPassage]
+  );
 
   const clearWatchdog = useCallback(() => {
     if (watchdogRef.current != null) {
@@ -276,11 +340,21 @@ export default function ReaderScreen({ bookTitle, chapter, lang, onChangeLang, o
         </Text>
       )}
 
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
-        {chapter.passages.map((passage) => {
+      <ScrollView
+        ref={scrollRef}
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        {chapter.passages.map((passage, index) => {
           const active = playingPassageId === passage.id;
           return (
-            <View key={passage.id} style={[styles.passageCard, active && styles.passageCardActive]}>
+            <View
+              key={passage.id}
+              style={[styles.passageCard, active && styles.passageCardActive]}
+              onLayout={(e) => handlePassageLayout(index, e)}
+            >
               <View style={styles.passageHeader}>
                 {passage.title ? (
                   <Text style={styles.passageTitle}>{passage.title}</Text>
