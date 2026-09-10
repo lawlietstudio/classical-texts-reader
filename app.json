@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "self-run",
-    "slug": "self-run",
+    "name": "古文有聲",
+    "slug": "classicvoice",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.selfrun"
+      "package": "com.anonymous.classicvoice"
     },
     "web": {
       "favicon": "./assets/favicon.png"

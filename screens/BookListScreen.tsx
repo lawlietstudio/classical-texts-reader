@@ -26,7 +26,7 @@ export default function BookListScreen({
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <View>
-          <Text style={styles.header}>經典有聲</Text>
+          <Text style={styles.header}>古文有聲</Text>
           <Text style={styles.subheader}>文言文 · 白話對照 · 朗讀</Text>
         </View>
         <Pressable style={styles.themeToggle} onPress={onOpenSettings} hitSlop={10}>
