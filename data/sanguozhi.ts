@@ -13,6 +13,7 @@ import { dongeryuanliuLiezhuan } from './sanguozhi/11-dongeryuanliu-liezhuan';
 import { lubuzanghongLiezhuan } from './sanguozhi/12-lubuzanghong-liezhuan';
 import { zhuxiahoucaoLiezhuan } from './sanguozhi/13-zhuxiahoucao-liezhuan';
 import { erxunjiaLiezhuan } from './sanguozhi/14-erxunjia-liezhuan';
+import { chengguodongliujiangliuLiezhuan } from './sanguozhi/15-chengguodongliujiangliu-liezhuan';
 
 export const sanguozhi: Book = {
   id: 'sanguozhi',
@@ -35,5 +36,6 @@ export const sanguozhi: Book = {
     lubuzanghongLiezhuan,
     zhuxiahoucaoLiezhuan,
     erxunjiaLiezhuan,
+    chengguodongliujiangliuLiezhuan,
   ],
 };
