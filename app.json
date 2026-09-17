@@ -8,7 +8,10 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lawlietstudio.classicvoice"
+      "bundleIdentifier": "com.lawlietstudio.classicvoice",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +21,13 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.classicvoice"
+      "package": "com.anonymous.classicvoice",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,6 +39,11 @@
           "enableBackgroundPlayback": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "70312871-ecf1-4986-bb11-c9689e71d70b"
+      }
+    }
   }
 }
