@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Animated,
   Dimensions,
+  LayoutChangeEvent,
   Modal,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   PanResponder,
   Platform,
   Pressable,
@@ -70,6 +73,7 @@ export default function ReaderScreen({
     fontSize,
     rate,
     setRate,
+    snapScroll,
   } = useReaderPrefs();
   const styles = useMemo(() => createStyles(colors, FONT_SIZE_VALUES[fontSize]), [colors, fontSize]);
   const [playingPassageId, setPlayingPassageId] = useState<string | null>(null);
@@ -102,6 +106,68 @@ export default function ReaderScreen({
   const handleStopRef = useRef<(() => void) | null>(null);
   const { voices, voiceId, checked: voiceChecked, selectVoice } = useSpeechVoice(lang);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
+
+  // Snap-scrolling (opt-in via Settings): after the user stops scrolling, glide to the top of
+  // whichever passage card is nearest, so scrolling advances one passage at a time instead of
+  // landing mid-card. Offsets are always tracked via onLayout (cheap) but only acted on when
+  // `snapScroll` is on, so toggling the setting doesn't need to remount the list.
+  const scrollRef = useRef<ScrollView>(null);
+  const passageOffsetsRef = useRef<number[]>([]);
+  const lastScrollYRef = useRef(0);
+  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    passageOffsetsRef.current = [];
+  }, [chapter.id]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!snapScroll && scrollEndTimerRef.current != null) {
+      clearTimeout(scrollEndTimerRef.current);
+      scrollEndTimerRef.current = null;
+    }
+  }, [snapScroll]);
+
+  const handlePassageLayout = useCallback((index: number, e: LayoutChangeEvent) => {
+    passageOffsetsRef.current[index] = e.nativeEvent.layout.y;
+  }, []);
+
+  const snapToNearestPassage = useCallback((y: number) => {
+    const offsets = passageOffsetsRef.current;
+    if (!offsets.length) return;
+    let nearest = offsets[0];
+    let minDist = Math.abs(y - nearest);
+    for (let i = 1; i < offsets.length; i++) {
+      const offset = offsets[i];
+      if (offset == null) continue;
+      const dist = Math.abs(y - offset);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = offset;
+      }
+    }
+    if (Math.abs(nearest - y) > 1) {
+      scrollRef.current?.scrollTo({ y: nearest, animated: true });
+    }
+  }, []);
+
+  const handleScroll = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (!snapScroll) return;
+      lastScrollYRef.current = e.nativeEvent.contentOffset.y;
+      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
+      scrollEndTimerRef.current = setTimeout(() => {
+        scrollEndTimerRef.current = null;
+        snapToNearestPassage(lastScrollYRef.current);
+      }, 120);
+    },
+    [snapScroll, snapToNearestPassage]
+  );
 
   const clearWatchdog = useCallback(() => {
     if (watchdogRef.current != null) {
@@ -524,11 +590,21 @@ export default function ReaderScreen({
         style={[styles.scroll, { transform: [{ translateX }] }]}
         {...panResponder.panHandlers}
       >
-      <ScrollView style={styles.scrollInner} contentContainerStyle={styles.scrollContent}>
-        {chapter.passages.map((passage) => {
+      <ScrollView
+        ref={scrollRef}
+        style={styles.scrollInner}
+        contentContainerStyle={styles.scrollContent}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        {chapter.passages.map((passage, index) => {
           const active = playingPassageId === passage.id;
           return (
-            <View key={passage.id} style={[styles.passageCard, active && styles.passageCardActive]}>
+            <View
+              key={passage.id}
+              style={[styles.passageCard, active && styles.passageCardActive]}
+              onLayout={(e) => handlePassageLayout(index, e)}
+            >
               <View style={styles.passageHeader}>
                 {passage.title ? (
                   <Text style={styles.passageTitle}>{passage.title}</Text>
