@@ -114,7 +114,6 @@ export default function ReaderScreen({
   const scrollRef = useRef<ScrollView>(null);
   const passageOffsetsRef = useRef<number[]>([]);
   const lastScrollYRef = useRef(0);
-  const viewportHeightRef = useRef(0);
   const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -170,27 +169,17 @@ export default function ReaderScreen({
     [snapScroll, snapToNearestPassage]
   );
 
-  const handleScrollViewLayout = useCallback((e: LayoutChangeEvent) => {
-    viewportHeightRef.current = e.nativeEvent.layout.height;
-  }, []);
-
   // Follow-along: whenever a new passage starts playing (whether from "play chapter" advancing
-  // or a manual tap), bring it into view if it isn't already comfortably on-screen. Independent
-  // of the `snapScroll` setting above — this is about keeping the read-aloud passage visible,
-  // not about where a manual drag-scroll comes to rest.
+  // or a manual tap), scroll it to the top of the view. Independent of the `snapScroll` setting
+  // above — this is about keeping the read-aloud passage visible, not about where a manual
+  // drag-scroll comes to rest.
   useEffect(() => {
     if (playingPassageId == null) return;
     const index = chapter.passages.findIndex((p) => p.id === playingPassageId);
     if (index === -1) return;
     const offset = passageOffsetsRef.current[index];
     if (offset == null) return;
-    const viewportHeight = viewportHeightRef.current;
-    const margin = 24;
-    const visibleTop = lastScrollYRef.current + margin;
-    const visibleBottom = lastScrollYRef.current + viewportHeight - margin;
-    if (offset < visibleTop || offset > visibleBottom) {
-      scrollRef.current?.scrollTo({ y: Math.max(0, offset - margin), animated: true });
-    }
+    scrollRef.current?.scrollTo({ y: offset, animated: true });
   }, [playingPassageId, chapter.passages]);
 
   const clearWatchdog = useCallback(() => {
@@ -619,7 +608,6 @@ export default function ReaderScreen({
         style={styles.scrollInner}
         contentContainerStyle={styles.scrollContent}
         onScroll={handleScroll}
-        onLayout={handleScrollViewLayout}
         scrollEventThrottle={16}
       >
         {chapter.passages.map((passage, index) => {
