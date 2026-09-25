@@ -1,3 +1,24 @@
+import type { PassageMode } from '../hooks/usePassageMode';
+import baiyujingParagraphs from './paragraphs/baiyujing.json';
+import chenqingbiaoParagraphs from './paragraphs/chenqingbiao.json';
+import chushibiaoParagraphs from './paragraphs/chushibiao.json';
+import guiguziParagraphs from './paragraphs/guiguzi.json';
+import guiquilaiciParagraphs from './paragraphs/guiquilaici.json';
+import hanfeiziParagraphs from './paragraphs/hanfeizi.json';
+import jianzhukeshuParagraphs from './paragraphs/jianzhukeshu.json';
+import liuzuParagraphs from './paragraphs/liuzu.json';
+import longzhongduiParagraphs from './paragraphs/longzhongdui.json';
+import lunyuParagraphs from './paragraphs/lunyu.json';
+import lvshichunqiuParagraphs from './paragraphs/lvshichunqiu.json';
+import mengziParagraphs from './paragraphs/mengzi.json';
+import moziParagraphs from './paragraphs/mozi.json';
+import sanguoyanyiParagraphs from './paragraphs/sanguoyanyi.json';
+import sanguozhiParagraphs from './paragraphs/sanguozhi.json';
+import shijiParagraphs from './paragraphs/shiji.json';
+import shishuoParagraphs from './paragraphs/shishuo.json';
+import sunzibingfaParagraphs from './paragraphs/sunzibingfa.json';
+import xinjingParagraphs from './paragraphs/xinjing.json';
+import zhuangziParagraphs from './paragraphs/zhuangzi.json';
 import { Book } from './types';
 import { lunyu } from './lunyu';
 import { xinjing } from './xinjing';
@@ -43,6 +64,29 @@ export const books: Book[] = [
   sanguozhi,
 ];
 
-export function getBook(id: string): Book | undefined {
-  return books.find((b) => b.id === id);
+const paragraphBooks: Book[] = [
+  baiyujingParagraphs,
+  chenqingbiaoParagraphs,
+  chushibiaoParagraphs,
+  guiguziParagraphs,
+  guiquilaiciParagraphs,
+  hanfeiziParagraphs,
+  jianzhukeshuParagraphs,
+  liuzuParagraphs,
+  longzhongduiParagraphs,
+  lunyuParagraphs,
+  lvshichunqiuParagraphs,
+  mengziParagraphs,
+  moziParagraphs,
+  sanguoyanyiParagraphs,
+  sanguozhiParagraphs,
+  shijiParagraphs,
+  shishuoParagraphs,
+  sunzibingfaParagraphs,
+  xinjingParagraphs,
+  zhuangziParagraphs,
+];
+
+export function getBook(id: string, mode: PassageMode = 'sentence'): Book | undefined {
+  return (mode === 'paragraph' ? paragraphBooks : books).find((b) => b.id === id);
 }
