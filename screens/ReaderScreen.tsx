@@ -22,6 +22,7 @@ import { FONT_SIZE_VALUES, useReaderPrefs } from '../hooks/useReaderPrefs';
 import { SpeechLang } from '../hooks/useSpeechLang';
 import { useSpeechVoice } from '../hooks/useSpeechVoice';
 import { ThemeColors } from '../theme/colors';
+import { getPassageSnapTarget } from '../utils/passageSnap';
 
 // react-native-web's `Platform.OS` is always `'web'`, even when the page is running inside
 // Android Chrome — it doesn't distinguish the underlying mobile OS the way the native
@@ -113,75 +114,63 @@ export default function ReaderScreen({
   // landing mid-card. Offsets are always tracked via onLayout (cheap) but only acted on when
   // `snapScroll` is on, so toggling the setting doesn't need to remount the list.
   const scrollRef = useRef<ScrollView>(null);
-  const passageOffsetsRef = useRef<number[]>([]);
+  const passageOffsetsRef = useRef<Record<string, number>>({});
   const lastScrollYRef = useRef(0);
+  const maxScrollYRef = useRef(0);
+  const draggingRef = useRef(false);
   const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    passageOffsetsRef.current = [];
-  }, [chapter.id]);
-
-  useEffect(() => {
-    return () => {
-      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!snapScroll && scrollEndTimerRef.current != null) {
+  const clearScrollTimer = useCallback(() => {
+    if (scrollEndTimerRef.current != null) {
       clearTimeout(scrollEndTimerRef.current);
       scrollEndTimerRef.current = null;
     }
-  }, [snapScroll]);
-
-  const handlePassageLayout = useCallback((index: number, e: LayoutChangeEvent) => {
-    passageOffsetsRef.current[index] = e.nativeEvent.layout.y;
   }, []);
 
-  const snapToNearestPassage = useCallback((y: number) => {
-    const offsets = passageOffsetsRef.current;
-    if (!offsets.length) return;
-    let nearest = offsets[0];
-    let minDist = Math.abs(y - nearest);
-    for (let i = 1; i < offsets.length; i++) {
-      const offset = offsets[i];
-      if (offset == null) continue;
-      const dist = Math.abs(y - offset);
-      if (dist < minDist) {
-        minDist = dist;
-        nearest = offset;
+  // Cancel work from the previous chapter or preference when navigation changes.
+  useEffect(() => {
+    clearScrollTimer();
+    return clearScrollTimer;
+  }, [chapter.id, snapScroll, clearScrollTimer]);
+
+  const handlePassageLayout = useCallback((id: string, e: LayoutChangeEvent) => {
+    passageOffsetsRef.current[id] = e.nativeEvent.layout.y;
+  }, []);
+
+  const scheduleSnap = useCallback(() => {
+    clearScrollTimer();
+    if (!snapScroll || draggingRef.current) return;
+    scrollEndTimerRef.current = setTimeout(() => {
+      scrollEndTimerRef.current = null;
+      const offsets = chapter.passages
+        .map((passage) => passageOffsetsRef.current[passage.id])
+        .filter((offset): offset is number => offset != null);
+      if (!offsets.length) return;
+      const y = lastScrollYRef.current;
+      const target = getPassageSnapTarget(offsets, y, maxScrollYRef.current);
+      if (Math.abs(target - y) > 1) {
+        scrollRef.current?.scrollTo({ y: target, animated: true });
       }
-    }
-    if (Math.abs(nearest - y) > 1) {
-      scrollRef.current?.scrollTo({ y: nearest, animated: true });
-    }
-  }, []);
+    }, 120);
+  }, [chapter.passages, snapScroll, clearScrollTimer]);
 
-  const handleScroll = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      lastScrollYRef.current = e.nativeEvent.contentOffset.y;
-      if (!snapScroll) return;
-      if (scrollEndTimerRef.current != null) clearTimeout(scrollEndTimerRef.current);
-      scrollEndTimerRef.current = setTimeout(() => {
-        scrollEndTimerRef.current = null;
-        snapToNearestPassage(lastScrollYRef.current);
-      }, 120);
-    },
-    [snapScroll, snapToNearestPassage]
-  );
+  const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
+    lastScrollYRef.current = contentOffset.y;
+    maxScrollYRef.current = Math.max(0, contentSize.height - layoutMeasurement.height);
+    scheduleSnap();
+  }, [scheduleSnap]);
 
-  // Follow-along: whenever a new passage starts playing (whether from "play chapter" advancing
-  // or a manual tap), scroll it to the top of the view. Independent of the `snapScroll` setting
-  // above — this is about keeping the read-aloud passage visible, not about where a manual
-  // drag-scroll comes to rest.
+  // Match the classical reader: keep the spoken passage visible on both a
+  // manual play tap and automatic chapter playback, independently of drag snapping.
   useEffect(() => {
     if (playingPassageId == null) return;
-    const index = chapter.passages.findIndex((p) => p.id === playingPassageId);
-    if (index === -1) return;
-    const offset = passageOffsetsRef.current[index];
+    if (!chapter.passages.some((passage) => passage.id === playingPassageId)) return;
+    const offset = passageOffsetsRef.current[playingPassageId];
     if (offset == null) return;
+    clearScrollTimer();
     scrollRef.current?.scrollTo({ y: offset, animated: true });
-  }, [playingPassageId, chapter.passages]);
+  }, [playingPassageId, chapter.passages, clearScrollTimer]);
 
   const clearWatchdog = useCallback(() => {
     if (watchdogRef.current != null) {
@@ -612,8 +601,24 @@ export default function ReaderScreen({
         contentContainerStyle={styles.scrollContent}
         onScroll={handleScroll}
         scrollEventThrottle={16}
+        onMomentumScrollBegin={() => {
+          draggingRef.current = true;
+          clearScrollTimer();
+        }}
+        onMomentumScrollEnd={() => {
+          draggingRef.current = false;
+          scheduleSnap();
+        }}
+        onScrollBeginDrag={() => {
+          draggingRef.current = true;
+          clearScrollTimer();
+        }}
+        onScrollEndDrag={() => {
+          draggingRef.current = false;
+          scheduleSnap();
+        }}
       >
-        {chapter.passages.map((passage, index) => {
+        {chapter.passages.map((passage) => {
           const active = playingPassageId === passage.id;
           const PassageCard = tapPassageToPlay ? Pressable : View;
           const onPassagePress = () => {
@@ -630,7 +635,7 @@ export default function ReaderScreen({
               accessibilityLabel={tapPassageToPlay ? actionLabel + '：' + (passage.title || passage.original) : undefined}
               key={passage.id}
               style={[styles.passageCard, active && styles.passageCardActive]}
-              onLayout={(e) => handlePassageLayout(index, e)}
+              onLayout={(e) => handlePassageLayout(passage.id, e)}
             >
               <View style={styles.passageHeader}>
                 {passage.title ? (
