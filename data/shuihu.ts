@@ -9,13 +9,18 @@ import { shuihu007 } from './shuihu/007';
 import { shuihu008 } from './shuihu/008';
 import { shuihu009 } from './shuihu/009';
 import { shuihu010 } from './shuihu/010';
+import { shuihu011 } from './shuihu/011';
+import { shuihu012 } from './shuihu/012';
+import { shuihu013 } from './shuihu/013';
+import { shuihu014 } from './shuihu/014';
+import { shuihu015 } from './shuihu/015';
 
 export const shuihu: Book = {
   id: 'shuihu',
   title: '水滸傳',
-  author: '施耐庵（容與堂本百回）',
+  author: '施耐庵（袁無涯本,取其百回主線）',
   description:
-    '明代長篇白話小說,四大名著之一,寫宋江等一百零八條好漢聚義梁山泊、受招安、征方臘嘅故事。全書一百回(容與堂本),逐回加入。',
+    '明代長篇白話小說,四大名著之一,寫宋江等一百零八條好漢聚義梁山泊、受招安、征方臘嘅故事。全書一百回(依袁無涯本,略去田虎、王慶兩段),逐回加入。',
   chapters: [
     shuihu001,
     shuihu002,
@@ -27,5 +32,10 @@ export const shuihu: Book = {
     shuihu008,
     shuihu009,
     shuihu010,
+    shuihu011,
+    shuihu012,
+    shuihu013,
+    shuihu014,
+    shuihu015,
   ],
 };
