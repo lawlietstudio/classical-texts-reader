@@ -8,3 +8,5 @@ Romance of the Three Kingdoms: 120 chapters; 2,772 original paragraphs / 30,133 
 
 Regenerate: `node scripts/archive-paragraphs.cjs` (requires Git history).
 Validate: `node --test scripts/paragraph-modes.test.cjs`, `npx tsc --noEmit`, `npm run build:web`.
+
+水滸傳 (`shuihu`) is authored natively in both editions from the start (source paragraphs and verse blocks from the 120-回 Wikisource text, minus the 田虎/王慶 additions, numbered as the 100-回 story). Its sentence edition is `data/shuihu/NNN.ts`; its paragraph edition `data/paragraphs/shuihu.json` is generated from the same authored sentences, so both always agree. It has no pre-split Git revision, so the archive test checks it for internal consistency instead (`nativeBookIds` in `scripts/paragraph-modes.test.cjs`).

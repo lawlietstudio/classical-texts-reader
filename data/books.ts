@@ -14,6 +14,7 @@ import mengziParagraphs from './paragraphs/mengzi.json';
 import moziParagraphs from './paragraphs/mozi.json';
 import sanguoyanyiParagraphs from './paragraphs/sanguoyanyi.json';
 import sanguozhiParagraphs from './paragraphs/sanguozhi.json';
+import shuihuParagraphs from './paragraphs/shuihu.json';
 import shijiParagraphs from './paragraphs/shiji.json';
 import shishuoParagraphs from './paragraphs/shishuo.json';
 import sunzibingfaParagraphs from './paragraphs/sunzibingfa.json';
@@ -40,6 +41,7 @@ import { chushibiao } from './chushibiao';
 import { longzhongdui } from './longzhongdui';
 import { chenqingbiao } from './chenqingbiao';
 import { sanguozhi } from './sanguozhi';
+import { shuihu } from './shuihu';
 
 export const books: Book[] = [
   lunyu,
@@ -62,6 +64,7 @@ export const books: Book[] = [
   longzhongdui,
   chenqingbiao,
   sanguozhi,
+  shuihu,
 ];
 
 const paragraphBooks: Book[] = [
@@ -80,6 +83,7 @@ const paragraphBooks: Book[] = [
   moziParagraphs,
   sanguoyanyiParagraphs,
   sanguozhiParagraphs,
+  shuihuParagraphs,
   shijiParagraphs,
   shishuoParagraphs,
   sunzibingfaParagraphs,
