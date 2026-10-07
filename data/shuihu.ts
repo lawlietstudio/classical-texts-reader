@@ -19,6 +19,9 @@ import { shuihu017 } from './shuihu/017';
 import { shuihu018 } from './shuihu/018';
 import { shuihu019 } from './shuihu/019';
 import { shuihu020 } from './shuihu/020';
+import { shuihu021 } from './shuihu/021';
+import { shuihu022 } from './shuihu/022';
+import { shuihu023 } from './shuihu/023';
 
 export const shuihu: Book = {
   id: 'shuihu',
@@ -47,5 +50,8 @@ export const shuihu: Book = {
     shuihu018,
     shuihu019,
     shuihu020,
+    shuihu021,
+    shuihu022,
+    shuihu023,
   ],
 };
