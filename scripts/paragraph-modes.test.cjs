@@ -9,7 +9,7 @@ const historical = loadBooks(root, provenance.revision);
 
 // Books authored after the sentence resegmentation ship both editions natively, so they have no
 // pre-split Git revision to compare against; they are checked for internal consistency instead.
-const nativeBookIds = ['shuihu'];
+const nativeBookIds = ['shuihu', 'zhanguoce'];
 
 test('all 20 archived Chinese books retain exact pre-split text, translations and chapter IDs', () => {
   assert.equal(catalog.books.length, 20 + nativeBookIds.length);
