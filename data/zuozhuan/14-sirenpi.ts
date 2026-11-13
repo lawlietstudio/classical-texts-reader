@@ -43,7 +43,7 @@ export const zz14: Chapter = {
     {
       id: 'zz14-1-5',
       original:
-        '曰：「蒲城之役，君命一宿，女卽至。',
+        '曰：「蒲城之役，君命一宿，女即至。',
       vernacular:
         '文公講:「蒲城嗰次戰役,先君命令你過一晚先到,你當日就到。',
       vernacularMandarin:
@@ -133,7 +133,7 @@ export const zz14: Chapter = {
     {
       id: 'zz14-2-6',
       original:
-        '今君卽位，其無蒲狄乎。',
+        '今君即位，其無蒲狄乎。',
       vernacular:
         '而家你即位咗,難道冇蒲城人同狄人嗎?',
       vernacularMandarin:
@@ -160,7 +160,7 @@ export const zz14: Chapter = {
     {
       id: 'zz14-2-9',
       original:
-        '行者甚衆，豈唯刑臣？」',
+        '行者甚眾，豈唯刑臣？」',
       vernacular:
         '離開嘅人好多,又何止我呢個受過刑嘅人?」',
       vernacularMandarin:

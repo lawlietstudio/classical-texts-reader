@@ -43,7 +43,7 @@ export const zz29: Chapter = {
     {
       id: 'zz29-2-3',
       original:
-        '執事不以釁鼓，使歸卽戮，君之惠也。',
+        '執事不以釁鼓，使歸即戮，君之惠也。',
       vernacular:
         '你冇用我嘅血塗鼓祭祀,放我返去受死,係你嘅恩惠。',
       vernacularMandarin:

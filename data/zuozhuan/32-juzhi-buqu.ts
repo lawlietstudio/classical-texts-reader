@@ -97,7 +97,7 @@ export const zz32: Chapter = {
     {
       id: 'zz32-3-1',
       original:
-        '對曰：「昔秦人負恃其衆，貪於土地，逐我諸戎。',
+        '對曰：「昔秦人負恃其眾，貪於土地，逐我諸戎。',
       vernacular:
         '駒支答:「以前秦國人依仗人多,貪圖土地,驅逐我哋戎人。',
       vernacularMandarin:
@@ -196,7 +196,7 @@ export const zz32: Chapter = {
     {
       id: 'zz32-4-1',
       original:
-        '宣子辭焉，使卽事於會，成愷悌也。',
+        '宣子辭焉，使即事於會，成愷悌也。',
       vernacular:
         '范宣子向佢道歉,叫佢參加盟會,成全和樂平易嘅氣氛。',
       vernacularMandarin:

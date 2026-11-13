@@ -106,7 +106,7 @@ export const zgc38: Chapter = {
     {
       id: 'zgc38-3-1',
       original:
-        '聶政驚，愈恠其厚，固謝嚴仲子。',
+        '聶政驚，愈怪其厚，固謝嚴仲子。',
       vernacular:
         '聶政好驚訝,更加奇怪佢咁厚待自己,堅決推辭嚴仲子。',
       vernacularMandarin:

@@ -43,7 +43,7 @@ export const zz31: Chapter = {
     {
       id: 'zz31-2-3',
       original:
-        '無祿，獻公卽世。',
+        '無祿，獻公即世。',
       vernacular:
         '不幸獻公去世。',
       vernacularMandarin:
@@ -142,7 +142,7 @@ export const zz31: Chapter = {
     {
       id: 'zz31-4-1',
       original:
-        '「無祿，文公卽世，穆為不弔，蔑死我君，寡我襄公，迭我殽地，奸絕我好，伐我保城，殄滅我費滑，散離我兄弟，撓亂我同盟，傾覆我國家。',
+        '「無祿，文公即世，穆為不弔，蔑死我君，寡我襄公，迭我殽地，奸絕我好，伐我保城，殄滅我費滑，散離我兄弟，撓亂我同盟，傾覆我國家。',
       vernacular:
         '「不幸晉文公去世,秦穆公唔肯弔唁,輕視我哋已死嘅國君,欺負我哋嘅襄公年幼,侵犯我哋嘅殽地,破壞我哋嘅友好,攻打我哋嘅城池,滅絕我哋嘅費國同滑國,離散我哋嘅兄弟之國,擾亂我哋嘅盟國,顛覆我哋嘅國家。',
       vernacularMandarin:
@@ -160,7 +160,7 @@ export const zz31: Chapter = {
     {
       id: 'zz31-4-3',
       original:
-        '猶願赦罪于穆公，穆公弗聽，而卽楚謀我。',
+        '猶願赦罪于穆公，穆公弗聽，而即楚謀我。',
       vernacular:
         '襄公仍然希望向秦穆公請罪,穆公唔聽,反而去同楚國謀劃對付我哋。',
       vernacularMandarin:
@@ -178,7 +178,7 @@ export const zz31: Chapter = {
     {
       id: 'zz31-5-1',
       original:
-        '「穆襄卽世，康靈卽位。',
+        '「穆襄即世，康靈即位。',
       vernacular:
         '「秦穆公同晉襄公去世之後,秦康公同晉靈公即位。',
       vernacularMandarin:
@@ -241,7 +241,7 @@ export const zz31: Chapter = {
     {
       id: 'zz31-6-4',
       original:
-        '言誓未就，景公卽世，我寡君是以有令狐之會。',
+        '言誓未就，景公即世，我寡君是以有令狐之會。',
       vernacular:
         '盟誓仲未完成,景公就去世,我哋國君因此先有令狐嘅會盟。',
       vernacularMandarin:

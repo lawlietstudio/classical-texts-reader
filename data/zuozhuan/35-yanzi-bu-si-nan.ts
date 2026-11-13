@@ -169,7 +169,7 @@ export const zz35: Chapter = {
     {
       id: 'zz35-4-1',
       original:
-        '門啓而入，枕尸股而哭。',
+        '門啟而入，枕尸股而哭。',
       vernacular:
         '大門打開,晏子走入去,將莊公嘅屍體枕喺自己大腿上痛哭。',
       vernacularMandarin:
