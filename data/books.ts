@@ -20,6 +20,7 @@ import shishuoParagraphs from './paragraphs/shishuo.json';
 import sunzibingfaParagraphs from './paragraphs/sunzibingfa.json';
 import xinjingParagraphs from './paragraphs/xinjing.json';
 import zhanguoceParagraphs from './paragraphs/zhanguoce.json';
+import zuozhuanParagraphs from './paragraphs/zuozhuan.json';
 import zhuangziParagraphs from './paragraphs/zhuangzi.json';
 import { Book } from './types';
 import { lunyu } from './lunyu';
@@ -44,6 +45,7 @@ import { chenqingbiao } from './chenqingbiao';
 import { sanguozhi } from './sanguozhi';
 import { shuihu } from './shuihu';
 import { zhanguoce } from './zhanguoce';
+import { zuozhuan } from './zuozhuan';
 
 export const books: Book[] = [
   lunyu,
@@ -68,6 +70,7 @@ export const books: Book[] = [
   sanguozhi,
   shuihu,
   zhanguoce,
+  zuozhuan,
 ];
 
 const paragraphBooks: Book[] = [
@@ -93,6 +96,7 @@ const paragraphBooks: Book[] = [
   xinjingParagraphs,
   zhanguoceParagraphs,
   zhuangziParagraphs,
+  zuozhuanParagraphs,
 ];
 
 export function getBook(id: string, mode: PassageMode = 'sentence'): Book | undefined {

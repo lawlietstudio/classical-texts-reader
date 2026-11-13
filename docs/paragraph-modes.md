@@ -10,3 +10,5 @@ Regenerate: `node scripts/archive-paragraphs.cjs` (requires Git history).
 Validate: `node --test scripts/paragraph-modes.test.cjs`, `npx tsc --noEmit`, `npm run build:web`.
 
 水滸傳 (`shuihu`) is authored natively in both editions from the start (source paragraphs and verse blocks from the 120-回 Wikisource text, minus the 田虎/王慶 additions, numbered as the 100-回 story). Its sentence edition is `data/shuihu/NNN.ts`; its paragraph edition `data/paragraphs/shuihu.json` is generated from the same authored sentences, so both always agree. It has no pre-split Git revision, so the archive test checks it for internal consistency instead (`nativeBookIds` in `scripts/paragraph-modes.test.cjs`).
+
+戰國策 (`zhanguoce`, 44 curated chapters) and 左傳 (`zuozhuan`, 47 curated chapters) are likewise authored natively in both editions (sentence modules `data/zhanguoce/*.ts`, `data/zuozhuan/*.ts`; paragraph JSON `data/paragraphs/zhanguoce.json`, `zuozhuan.json`, generated from the same authored sentences) and are listed in `nativeBookIds` in `scripts/paragraph-modes.test.cjs`. Sources: Wikisource 戰國策 (士禮居叢書本), 春秋左氏傳, and 古文觀止 for the 左傳 pieces where the 左傳 page is not properly punctuated.
