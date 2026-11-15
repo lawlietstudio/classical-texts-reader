@@ -637,7 +637,7 @@ export const sj037: Chapter = {
     {
       id: 'sj037-21-2',
       original:
-        '周惠王奔温，衛、燕立惠王弟穨為王。',
+        '周惠王奔溫，衛、燕立惠王弟穨為王。',
       vernacular:
         '周惠王逃到溫,衛、燕立惠王嘅弟弟穨為王。',
       vernacularMandarin:

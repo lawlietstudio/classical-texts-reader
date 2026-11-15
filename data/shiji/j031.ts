@@ -106,7 +106,7 @@ export const sj031: Chapter = {
     {
       id: 'sj031-3-1',
       original:
-        '乃封周章弟虞仲於周之北故夏虚，是為虞仲，列為諸侯。',
+        '乃封周章弟虞仲於周之北故夏虛，是為虞仲，列為諸侯。',
       vernacular:
         '於是封周章嘅弟弟虞仲喺周嘅北面原來夏朝嘅廢墟,就係虞仲,列為諸侯。',
       vernacularMandarin:

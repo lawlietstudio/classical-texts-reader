@@ -1051,7 +1051,7 @@ export const sj042: Chapter = {
     {
       id: 'sj042-29-1',
       original:
-        '五年，燕、衛與周惠王弟穨伐王，王出奔温，立弟穨為王。',
+        '五年，燕、衛與周惠王弟穨伐王，王出奔溫，立弟穨為王。',
       vernacular:
         '五年,燕國、衛國同周惠王嘅弟弟穨討伐惠王,惠王逃到溫,立弟弟穨為王。',
       vernacularMandarin:

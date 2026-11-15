@@ -880,7 +880,7 @@ export const sj045: Chapter = {
     {
       id: 'sj045-28-2',
       original:
-        '夫以實伐我者秦也，以虚名救我者楚也。',
+        '夫以實伐我者秦也，以虛名救我者楚也。',
       vernacular:
         '用實際行動討伐我哋嘅係秦國,用虛名救援我哋嘅係楚國。',
       vernacularMandarin:
@@ -889,7 +889,7 @@ export const sj045: Chapter = {
     {
       id: 'sj045-28-3',
       original:
-        '王恃楚之虚名，而輕絶強秦之敵，王必為天下大笑。',
+        '王恃楚之虛名，而輕絶強秦之敵，王必為天下大笑。',
       vernacular:
         '大王依賴楚國嘅虛名,而輕易斷絕強秦呢個敵國嘅關係,大王必定被天下人大大嘲笑。',
       vernacularMandarin:

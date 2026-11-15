@@ -520,7 +520,7 @@ export const sj039: Chapter = {
     {
       id: 'sj039-17-1',
       original:
-        '鄂侯二年，鲁隐公初立。',
+        '鄂侯二年，魯隐公初立。',
       vernacular:
         '鄂侯二年,魯隱公啱即位。',
       vernacularMandarin:
@@ -4516,7 +4516,7 @@ export const sj039: Chapter = {
     {
       id: 'sj039-108-5',
       original:
-        '三月甲辰，晉乃發兵至陽樊，圍温，入襄王于周。',
+        '三月甲辰，晉乃發兵至陽樊，圍溫，入襄王于周。',
       vernacular:
         '三月甲辰日,晉國就發兵到陽樊,包圍溫,將周襄王送返周。',
       vernacularMandarin:
@@ -5119,7 +5119,7 @@ export const sj039: Chapter = {
     {
       id: 'sj039-124-1',
       original:
-        '冬，晉侯會諸侯於温，欲率之朝周。',
+        '冬，晉侯會諸侯於溫，欲率之朝周。',
       vernacular:
         '冬天,晉侯喺溫會合諸侯,想率領佢哋朝見周王。',
       vernacularMandarin:
