@@ -1,10 +1,15 @@
 import { Book } from './types';
 import { wudiBenji } from './shiji/01-wudi-benji';
+import { sj002 } from './shiji/j002';
+import { sj003 } from './shiji/j003';
+import { sj004 } from './shiji/j004';
+import { sj005 } from './shiji/j005';
 import { qinshihuangBenji } from './shiji/03-qinshihuang-benji';
 import { xiangyuBenji } from './shiji/04-xiangyu-benji';
 import { gaozuBenji } from './shiji/05-gaozu-benji';
 import { yuewangGoujianShijia } from './shiji/06-yuewangoujian-shijia';
 import { kongziShijia } from './shiji/07-kongzi-shijia';
+import { chensheShijia } from './shiji/02-chenshe-shijia';
 import { liuhouShijia } from './shiji/08-liuhou-shijia';
 import { boyiLiezhuan } from './shiji/09-boyi-liezhuan';
 import { guanyanLiezhuan } from './shiji/10-guanyan-liezhuan';
@@ -25,21 +30,25 @@ import { youxiaLiezhuan } from './shiji/24-youxia-liezhuan';
 import { huajiLiezhuan } from './shiji/25-huaji-liezhuan';
 import { huozhiLiezhuan } from './shiji/26-huozhi-liezhuan';
 import { taishigongZixu } from './shiji/27-taishigong-zixu';
-import { chensheShijia } from './shiji/02-chenshe-shijia';
 
 export const shiji: Book = {
   id: 'shiji',
   title: '史記',
   author: '司馬遷',
   description:
-    '西漢司馬遷所著紀傳體通史,上起黃帝、下至漢武帝,為二十四史之首。呢度精選本紀、世家、列傳當中最經典嘅篇章,逐篇加入。',
+    '西漢司馬遷所著紀傳體通史,上起黃帝、下至漢武帝,為二十四史之首。本紀、世家、列傳逐篇加入,每篇附粵語及普通話白話翻譯。',
   chapters: [
     wudiBenji,
+    sj002,
+    sj003,
+    sj004,
+    sj005,
     qinshihuangBenji,
     xiangyuBenji,
     gaozuBenji,
     yuewangGoujianShijia,
     kongziShijia,
+    chensheShijia,
     liuhouShijia,
     boyiLiezhuan,
     guanyanLiezhuan,
@@ -60,6 +69,5 @@ export const shiji: Book = {
     huajiLiezhuan,
     huozhiLiezhuan,
     taishigongZixu,
-    chensheShijia,
   ],
 };

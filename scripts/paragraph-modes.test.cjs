@@ -10,13 +10,31 @@ const historical = loadBooks(root, provenance.revision);
 // Books authored after the sentence resegmentation ship both editions natively, so they have no
 // pre-split Git revision to compare against; they are checked for internal consistency instead.
 const nativeBookIds = ['shuihu', 'zhanguoce', 'zuozhuan'];
+// Books whose original chapters are archived but which have since been extended with natively authored chapters:
+// the archived chapters must still match the pre-split revision exactly; added chapters are checked for consistency.
+const extendedBookIds = ['shiji'];
 
 test('all 20 archived Chinese books retain exact pre-split text, translations and chapter IDs', () => {
   assert.equal(catalog.books.length, 20 + nativeBookIds.length);
   for (const book of catalog.books) {
     const paragraphs = catalog.getBook(book.id, 'paragraph');
     if (nativeBookIds.includes(book.id)) continue;
-    assert.deepEqual(JSON.parse(JSON.stringify(paragraphs)), JSON.parse(JSON.stringify(historical.find(b => b.id === book.id))));
+    const archived = historical.find(b => b.id === book.id);
+    if (extendedBookIds.includes(book.id)) {
+      const ids = new Set(archived.chapters.map(c => c.id));
+      const byId = (list) => JSON.parse(JSON.stringify([...list].sort((a, b) => a.id.localeCompare(b.id))));
+      assert.deepEqual(byId(paragraphs.chapters.filter(c => ids.has(c.id))), byId(archived.chapters));
+      for (const chapter of book.chapters.filter(c => !ids.has(c.id))) {
+        const para = paragraphs.chapters.find(c => c.id === chapter.id);
+        assert.ok(para, `${book.id} ${chapter.id} missing paragraph edition`);
+        const flat = (passages, key) => passages.map(p => p[key]).join('').split(String.fromCharCode(10)).join('');
+        for (const key of ['original', 'vernacular', 'vernacularMandarin']) {
+          assert.equal(flat(chapter.passages, key), flat(para.passages, key), `${book.id} ${chapter.id} ${key}`);
+        }
+      }
+    } else {
+      assert.deepEqual(JSON.parse(JSON.stringify(paragraphs)), JSON.parse(JSON.stringify(archived)));
+    }
     assert.deepEqual(Array.from(paragraphs.chapters, c => c.id), Array.from(book.chapters, c => c.id));
     assert.equal(catalog.getBook(book.id), book);
     assert.equal(catalog.getBook(book.id, 'sentence'), book);
