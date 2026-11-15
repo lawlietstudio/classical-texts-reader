@@ -85,6 +85,7 @@ import { sj101 } from './shiji/j101';
 import { sj102 } from './shiji/j102';
 import { sj103 } from './shiji/j103';
 import { sj104 } from './shiji/j104';
+import { sj105 } from './shiji/j105';
 import { sj106 } from './shiji/j106';
 import { sj107 } from './shiji/j107';
 import { sj108 } from './shiji/j108';
@@ -203,6 +204,7 @@ export const shiji: Book = {
     sj102,
     sj103,
     sj104,
+    sj105,
     sj106,
     sj107,
     sj108,
