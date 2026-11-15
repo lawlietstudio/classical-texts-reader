@@ -13,6 +13,9 @@ import { sj011 } from './shiji/j011';
 import { sj012 } from './shiji/j012';
 import { sj031 } from './shiji/j031';
 import { sj032 } from './shiji/j032';
+import { sj033 } from './shiji/j033';
+import { sj034 } from './shiji/j034';
+import { sj035 } from './shiji/j035';
 import { yuewangGoujianShijia } from './shiji/06-yuewangoujian-shijia';
 import { kongziShijia } from './shiji/07-kongzi-shijia';
 import { chensheShijia } from './shiji/02-chenshe-shijia';
@@ -58,6 +61,9 @@ export const shiji: Book = {
     sj012,
     sj031,
     sj032,
+    sj033,
+    sj034,
+    sj035,
     yuewangGoujianShijia,
     kongziShijia,
     chensheShijia,

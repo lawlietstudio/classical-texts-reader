@@ -565,7 +565,7 @@ export const sj010: Chapter = {
     {
       id: 'sj010-11-1',
       original:
-        '孝文皇帝元年十月庚戌，徙立故琅邪王泽为燕王。',
+        '孝文皇帝元年十月庚戌，徙立故琅邪王泽為燕王。',
       vernacular:
         '孝文皇帝元年十月庚戌日,改立原瑯邪王劉澤為燕王。',
       vernacularMandarin:
