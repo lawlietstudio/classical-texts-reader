@@ -2104,7 +2104,7 @@ export const sj105: Chapter = {
     {
       id: 'sj105-48-1',
       original:
-        '腹之所以腫者，言蹶陰之絡結小肮也。',
+        '腹之所以腫者，言蹶陰之絡結小腹也。',
       vernacular:
         '腹部所以腫脹嘅原因,係講厥陰嘅絡脈連結喺小腹。',
       vernacularMandarin:
@@ -2122,7 +2122,7 @@ export const sj105: Chapter = {
     {
       id: 'sj105-48-3',
       original:
-        '臣意即灸其足蹶陰之脈，左右各一所，即不遺溺而溲清，小肮痛止。',
+        '臣意即灸其足蹶陰之脈，左右各一所，即不遺溺而溲清，小腹痛止。',
       vernacular:
         '我就灸佢足厥陰嘅脈,左右各一處,就唔遺尿而小便清,小腹痛止住。',
       vernacularMandarin:
