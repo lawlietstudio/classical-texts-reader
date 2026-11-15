@@ -80,6 +80,7 @@ import { sj097 } from './shiji/j097';
 import { sj098 } from './shiji/j098';
 import { sj099 } from './shiji/j099';
 import { sj100 } from './shiji/j100';
+import { sj101 } from './shiji/j101';
 import { sj102 } from './shiji/j102';
 import { lijiangjunLiezhuan } from './shiji/23-lijiangjun-liezhuan';
 import { youxiaLiezhuan } from './shiji/24-youxia-liezhuan';
@@ -175,6 +176,7 @@ export const shiji: Book = {
     sj098,
     sj099,
     sj100,
+    sj101,
     sj102,
     lijiangjunLiezhuan,
     youxiaLiezhuan,
