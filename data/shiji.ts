@@ -30,6 +30,8 @@ import { sj046 } from './shiji/j046';
 import { kongziShijia } from './shiji/07-kongzi-shijia';
 import { chensheShijia } from './shiji/02-chenshe-shijia';
 import { sj049 } from './shiji/j049';
+import { sj050 } from './shiji/j050';
+import { sj051 } from './shiji/j051';
 import { liuhouShijia } from './shiji/08-liuhou-shijia';
 import { boyiLiezhuan } from './shiji/09-boyi-liezhuan';
 import { guanyanLiezhuan } from './shiji/10-guanyan-liezhuan';
@@ -89,6 +91,8 @@ export const shiji: Book = {
     kongziShijia,
     chensheShijia,
     sj049,
+    sj050,
+    sj051,
     liuhouShijia,
     boyiLiezhuan,
     guanyanLiezhuan,
