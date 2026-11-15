@@ -7,6 +7,10 @@ import { sj005 } from './shiji/j005';
 import { qinshihuangBenji } from './shiji/03-qinshihuang-benji';
 import { xiangyuBenji } from './shiji/04-xiangyu-benji';
 import { gaozuBenji } from './shiji/05-gaozu-benji';
+import { sj009 } from './shiji/j009';
+import { sj010 } from './shiji/j010';
+import { sj011 } from './shiji/j011';
+import { sj012 } from './shiji/j012';
 import { yuewangGoujianShijia } from './shiji/06-yuewangoujian-shijia';
 import { kongziShijia } from './shiji/07-kongzi-shijia';
 import { chensheShijia } from './shiji/02-chenshe-shijia';
@@ -46,6 +50,10 @@ export const shiji: Book = {
     qinshihuangBenji,
     xiangyuBenji,
     gaozuBenji,
+    sj009,
+    sj010,
+    sj011,
+    sj012,
     yuewangGoujianShijia,
     kongziShijia,
     chensheShijia,
