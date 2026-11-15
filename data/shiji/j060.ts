@@ -898,7 +898,7 @@ export const sj060: Chapter = {
     {
       id: 'sj060-17-1',
       original:
-        ':右齊王策。',
+        '右齊王策。',
       vernacular:
         '以上係齊王嘅策文。',
       vernacularMandarin:
@@ -1015,7 +1015,7 @@ export const sj060: Chapter = {
     {
       id: 'sj060-19-1',
       original:
-        ':右燕王策。',
+        '右燕王策。',
       vernacular:
         '以上係燕王嘅策文。',
       vernacularMandarin:
@@ -1114,7 +1114,7 @@ export const sj060: Chapter = {
     {
       id: 'sj060-21-1',
       original:
-        ':右廣陵王策。',
+        '右廣陵王策。',
       vernacular:
         '以上係廣陵王嘅策文。',
       vernacularMandarin:
