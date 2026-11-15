@@ -68,6 +68,7 @@ import { lvbuweiLiezhuan } from './shiji/19-lvbuwei-liezhuan';
 import { cikeLiezhuan } from './shiji/20-cike-liezhuan';
 import { lisiLiezhuan } from './shiji/21-lisi-liezhuan';
 import { sj088 } from './shiji/j088';
+import { sj089 } from './shiji/j089';
 import { sj090 } from './shiji/j090';
 import { huaiyinhouLiezhuan } from './shiji/22-huaiyinhou-liezhuan';
 import { lijiangjunLiezhuan } from './shiji/23-lijiangjun-liezhuan';
@@ -152,6 +153,7 @@ export const shiji: Book = {
     cikeLiezhuan,
     lisiLiezhuan,
     sj088,
+    sj089,
     sj090,
     huaiyinhouLiezhuan,
     lijiangjunLiezhuan,
