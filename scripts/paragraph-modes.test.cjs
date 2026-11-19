@@ -9,7 +9,7 @@ const historical = loadBooks(root, provenance.revision);
 
 // Books authored after the sentence resegmentation ship both editions natively, so they have no
 // pre-split Git revision to compare against; they are checked for internal consistency instead.
-const nativeBookIds = ['shuihu', 'zhanguoce', 'zuozhuan'];
+const nativeBookIds = ['shuihu', 'zhanguoce', 'zuozhuan', 'xunzi'];
 // Books whose original chapters are archived but which have since been extended with natively authored chapters:
 // the archived chapters must still match the pre-split revision exactly; added chapters are checked for consistency.
 const extendedBookIds = ['shiji'];
